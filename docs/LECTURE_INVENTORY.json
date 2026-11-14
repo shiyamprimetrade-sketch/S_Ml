@@ -1,0 +1,81 @@
+{
+  "missing": [
+    "Lecture1 (2).pdf"
+  ],
+  "supplied_extra": [
+    "Lecture2.pdf"
+  ],
+  "total_pages": 299,
+  "files": [
+    {
+      "file": "Lecture10.pdf",
+      "pages": 30,
+      "sha256": "976872be712be8963dc06faaee3eb18bf84d3481df3413c355b4905b7639901f",
+      "first_page_topic": "Advice for applying machine learning Deciding what to try next Machine Learning",
+      "review": "All page text extracted; selected equation pages visually verified"
+    },
+    {
+      "file": "Lecture11.pdf",
+      "pages": 18,
+      "sha256": "a83ed30983e95d68f23993b042ba148e447ab3e7088bb20f69b1ef26e163ef2f",
+      "first_page_topic": "Machine learning system design Priori3zing what to work on: Spam classi\ufb01ca3on example Machine Learning",
+      "review": "All page text extracted; selected equation pages visually verified"
+    },
+    {
+      "file": "Lecture12.pdf",
+      "pages": 31,
+      "sha256": "b1357a2d7ff9c729eaf55425dd5b7244e6fbde3304a50806effbefcf50194c53",
+      "first_page_topic": "Support Vector Machines Op2miza2on objec2ve Machine Learning",
+      "review": "All page text extracted; selected equation pages visually verified"
+    },
+    {
+      "file": "Lecture13.pdf",
+      "pages": 29,
+      "sha256": "ced42600decc3fdb7a0d758549eb2791bd7ad24f2e4ca2d32943c8d93ae8d1d5",
+      "first_page_topic": "Clustering Unsupervised learning introduc3on Machine Learning",
+      "review": "All page text extracted; selected equation pages visually verified"
+    },
+    {
+      "file": "Lecture14.pdf",
+      "pages": 30,
+      "sha256": "5b9c2f5f54f4691335f0da493abf067a7a4e35d2c3ab089246047e45a74e28bd",
+      "first_page_topic": "Dimensionality Reduc1on Mo1va1on I: Data Compression Machine Learning",
+      "review": "All page text extracted; selected equation pages visually verified"
+    },
+    {
+      "file": "Lecture15.pdf",
+      "pages": 37,
+      "sha256": "49e838e5cfdc597a823cee47148421b734bc1affba0f67d097c99117de251bdb",
+      "first_page_topic": "Anomaly detec-on Problem mo-va-on Machine Learning",
+      "review": "All page text extracted; selected equation pages visually verified"
+    },
+    {
+      "file": "Lecture16.pdf",
+      "pages": 22,
+      "sha256": "c0add1aa9285695af55d5a10877a29f2609f270ac4f9921722c894ccc389fa4d",
+      "first_page_topic": "Recommender Systems Problem formula4on Machine Learning",
+      "review": "All page text extracted; selected equation pages visually verified"
+    },
+    {
+      "file": "Lecture17.pdf",
+      "pages": 24,
+      "sha256": "ec22aefd4e15f7ad89d7efa144aa73c6b7468d5d9b2af50b8f81a5adcefff64b",
+      "first_page_topic": "Learning with large datasets Machine Learning Large scale machine learning",
+      "review": "All page text extracted; selected equation pages visually verified"
+    },
+    {
+      "file": "Lecture18.pdf",
+      "pages": 29,
+      "sha256": "57fe61ec836d8348bc70054ad4d21bc7ccf85e3ab8578be4ba8c6cb6f31f0f45",
+      "first_page_topic": "Applica'on example: Photo OCR Problem descrip'on and pipeline Machine Learning",
+      "review": "All page text extracted; selected equation pages visually verified"
+    },
+    {
+      "file": "Lecture2.pdf",
+      "pages": 49,
+      "sha256": "f8a890d5d35c82a66522e1c46414977713a7018715f0e00d9da4c64ebe283341",
+      "first_page_topic": "Andrew Ng Linear regression with one variable Model representa6on Machine Learning",
+      "review": "All page text extracted; selected equation pages visually verified"
+    }
+  ]
+}
