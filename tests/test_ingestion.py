@@ -129,8 +129,8 @@ class IngestionTests(unittest.TestCase):
         import sqlite3
         path = Path(self.temp.name) / 'future.db'
         with sqlite3.connect(path) as db:
-            db.execute('PRAGMA user_version=2')
+            db.execute('PRAGMA user_version=3')
         with self.assertRaises(ValueError):
             Store(path)
         with sqlite3.connect(path) as db:
-            self.assertEqual(db.execute('PRAGMA user_version').fetchone()[0], 2)
+            self.assertEqual(db.execute('PRAGMA user_version').fetchone()[0], 3)

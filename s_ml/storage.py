@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS experiments (
  created_at TEXT NOT NULL, hypothesis TEXT NOT NULL, variable TEXT NOT NULL,
  target_metric TEXT NOT NULL, observation_hours REAL NOT NULL, design TEXT NOT NULL,
  status TEXT NOT NULL DEFAULT 'planned');
-PRAGMA user_version=1;
+
 """
 
 
@@ -44,10 +44,13 @@ class Store:
         self.connection = sqlite3.connect(path)
         self.connection.row_factory = sqlite3.Row
         version = self.connection.execute("PRAGMA user_version").fetchone()[0]
-        if version not in (0, 1):
+        if version not in (0, 1, 2):
             self.connection.close()
             raise ValueError("Unsupported database version; explicit migration required")
         self.connection.executescript(SCHEMA)
+        if version < 2:
+            from .migrations import MIGRATION_2
+            self.connection.executescript(MIGRATION_2)
 
     def close(self):
         self.connection.close()
@@ -114,15 +117,22 @@ class Store:
         for key in ("views", "likes", "comments", "shares"):
             values = [p["metrics"][key]["value"] for p in posts if p["metrics"][key]["value"] is not None]
             totals[key] = {"observed_sum": sum(values) if values else None, "available_posts": len(values)}
-        return {"accounts": accounts, "posts": posts, "totals": totals,
+        from .studio import studio_evidence
+        jobs = [dict(row) for row in db.execute(
+            "SELECT id,account_id,interval_seconds,next_run,paused,lease_until,failures,last_run,last_status FROM worker_jobs ORDER BY id")]
+        connections = [dict(row) for row in db.execute(
+            "SELECT account_id,enabled,last_check,last_status,next_check FROM provider_connections ORDER BY account_id")]
+        return {"provider_connections": connections, "studio_evidence": studio_evidence(self), "worker_jobs": jobs,
+                "accounts": accounts, "posts": posts, "totals": totals,
                 "latest_observation": last,
                 "freshness_seconds": max(0, (now - aware_time(last)).total_seconds()) if last else None,
                 "batches": db.execute("SELECT COUNT(*) FROM batches").fetchone()[0],
                 "prediction_status": "blocked: insufficient horizon-aligned TikTok observations",
-                "monitoring_status": "manual authorized connector imports; no deployed poller"}
+                "monitoring_status": "local export-inbox jobs configured; platform collection is separate" if jobs else
+                    "manual authorized imports; no worker jobs configured"}
 
     def export(self):
-        return {"schema": "s_ml.store-export.v1", "batches": [json.loads(r[0]) for r in
+        return {"schema": "s_ml.store-export.v1", "studio_observations": [json.loads(r[0]) for r in self.connection.execute("SELECT payload FROM studio_batches ORDER BY collected_at")], "batches": [json.loads(r[0]) for r in
                 self.connection.execute("SELECT payload FROM batches ORDER BY observed_at")]}
 
     def delete_account(self, account_id):

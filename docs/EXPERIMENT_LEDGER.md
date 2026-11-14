@@ -39,3 +39,22 @@ question. Independent variable: opening hook. Target: completion rate. Planned
 window: 24 hours. Registered locally as observational, not randomized. No posts
 published, no result observed, and no expected effect size established. Missing
 retention data currently prevents outcome comparison.
+
+
+## E004 - Owner Studio evidence and restart recovery, 2026-11-14
+
+The signed-in owner Studio displayed per-post watch-time/completion measurements
+with an explicit previous-day update label. Actual observations were stored
+privately against known platform IDs. They remain separate from connector totals
+and from forecast-horizon labels. A repeat connector query returned unchanged
+measurements; collection time was not promoted into a source-freshness claim.
+
+A registered local inbox job processed new private inputs once; a fresh command
+reported no due work. Automated recovery verification additionally terminates a
+separate process immediately after committing a constructed Studio observation,
+waits logically for its lease to expire, and replays safely with no duplicate row.
+This validates crash recovery, not unattended platform data collection.
+
+Read-only connection-health tests cover missing secrets, denied access, wrong
+brand, malformed responses and persisted Retry-After. No separate standalone API
+token was configured or used. No browser credentials were copied into the engine.

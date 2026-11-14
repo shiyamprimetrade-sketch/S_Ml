@@ -13,6 +13,22 @@ def main(argv=None):
     sub = p.add_subparsers(dest='command', required=True)
     sub.add_parser('import-metricool').add_argument('file', type=Path)
     sub.add_parser('status')
+    sub.add_parser('import-studio').add_argument('file', type=Path)
+    job = sub.add_parser('worker-add')
+    job.add_argument('--account-id', type=int, required=True)
+    job.add_argument('--inbox', type=Path, required=True)
+    job.add_argument('--interval', type=float, default=300)
+    sub.add_parser('worker-once')
+    sub.add_parser('worker-run')
+    pause = sub.add_parser('worker-pause')
+    pause.add_argument('job_id', type=int)
+    pause.add_argument('--resume', action='store_true')
+    conn = sub.add_parser('connection-add')
+    conn.add_argument('--account-id', type=int, required=True)
+    conn.add_argument('--user-id', required=True)
+    conn.add_argument('--token-environment', default='S_ML_METRICOOL_TOKEN')
+    sub.add_parser('connection-health').add_argument('account_id', type=int)
+    sub.add_parser('connection-disconnect').add_argument('account_id', type=int)
     sub.add_parser('recommend')
     sub.add_parser('benchmark').add_argument('--output', default='runtime/benchmark')
     sub.add_parser('export').add_argument('file', type=Path)
@@ -28,6 +44,13 @@ def main(argv=None):
     exp.add_argument('--hours', type=float, default=24)
     sub.add_parser('serve').add_argument('--port', type=int, default=8766)
     args = p.parse_args(argv)
+    if args.command == 'worker-run':
+        from .worker import run_forever
+        try:
+            run_forever(args.database)
+        except KeyboardInterrupt:
+            pass
+        return
     if args.command == 'benchmark':
         result = benchmark(args.output)
     elif args.command == 'serve':
@@ -45,6 +68,28 @@ def main(argv=None):
         with Store(args.database) as store:
             if args.command == 'import-metricool':
                 result = store.ingest(json.loads(args.file.read_text(encoding='utf-8')))
+            elif args.command == 'import-studio':
+                from .studio import ingest_studio
+                result = ingest_studio(store, json.loads(args.file.read_text(encoding='utf-8')))
+            elif args.command == 'worker-add':
+                from .worker import add_job
+                result = {'job_id': add_job(store, args.account_id, args.inbox, args.interval)}
+            elif args.command == 'worker-once':
+                from .worker import run_once
+                result = run_once(store)
+            elif args.command == 'worker-pause':
+                from .worker import pause_job
+                pause_job(store, args.job_id, not args.resume)
+                result = {'job_id': args.job_id, 'paused': not args.resume}
+            elif args.command == 'connection-add':
+                from .providers import connect
+                result = connect(store, args.account_id, args.user_id, args.token_environment)
+            elif args.command == 'connection-health':
+                from .providers import health
+                result = health(store, args.account_id)
+            elif args.command == 'connection-disconnect':
+                from .providers import disconnect
+                result = disconnect(store, args.account_id)
             elif args.command == 'status':
                 result = store.summary()
             elif args.command == 'recommend':

@@ -4,12 +4,12 @@
 |---|---|---|
 | 1 Foundation | Implemented; all four CI jobs passed | Clean installation and verified PR |
 | 2 Stanford ML core | Partial | Regression implemented; classification/SVM, clustering/PCA and further algorithms pending |
-| 3 TikTok integration | Partial | Authorized connector export ingestion verified; standalone auth and sync pending |
+| 3 TikTok integration | Partial | Connector and Studio imports verified; standalone health implemented; analytics fetch/OAuth pending |
 | 4 Dashboard | Partial | Read-only HTTP API verified; browser rendering and action controls pending |
 | 5 Prediction | Pending | Horizon matching, label maturity, chronological purging, minimum data, baseline comparison |
 | 6 Recommendations | Partial | Fixed evidence rules only; learned recommendations and production briefs pending |
 | 7 Experiments | Partial | Registration only; outcome collection/comparison and result interpretation pending |
-| 8 Continuous operation | Pending | Durable scheduler, retry/backoff/rate-limit tests, restart and deployment evidence |
+| 8 Continuous operation | Pending | Export-inbox scheduling/recovery implemented; independent platform collector and host deployment pending |
 | 9 Expert system | Partial | Missingness/data-window diagnostics only; retention diagnoses require real measurements |
 | 10 Release | Pending | All mission criteria verified; version string alone does not imply production release |
 
@@ -21,3 +21,8 @@ Collect labelled snapshots before attempting TikTok forecasting. Do not assume
 instantaneous provider freshness. Future performance validation must ensure each
 training outcome was observable before the validation period; split by post,
 never by snapshot, and use matched forecast horizons.
+
+Version 0.2 milestone: local import scheduling, crash/restart recovery, separate
+Studio evidence and read-only API health are implemented. The next milestone is
+the independently authorized analytics fetch adapter and horizon-label readiness
+checks. A browser session is kept separate and is never exported as a token.

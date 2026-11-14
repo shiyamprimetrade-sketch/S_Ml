@@ -1,7 +1,7 @@
 # S_ML
 
 S_ML is a local-first machine-learning and observation engine. Its first mission
-is authorized TikTok analytics. Version 0.1.0 is an **engineering foundation**,
+is authorized TikTok analytics. Version 0.2.0 is an **engineering foundation**,
 not a completed autonomous TikTok forecasting service.
 
 ## Working now
@@ -16,6 +16,9 @@ not a completed autonomous TikTok forecasting service.
 - Missing values, units and timestamps remain explicit; backfills do not overwrite
   newer metadata. Exports, backups, account deletion and experiment registration.
 - Read-only local dashboard and CLI. Diagnostics are labelled fixed rules.
+- Separate Studio retention evidence, preserving source update days and unknown metric windows.
+- Restart-safe local export-inbox worker with leases, idempotent receipts, pause/resume and retry backoff.
+- Environment-secret references and a read-only Metricool API health check; remote token revocation and direct platform collection remain pending.
 
 ## Install and verify
 
@@ -70,6 +73,8 @@ need separate deletion. The CLI does not revoke provider grants.
 
 The source repo was empty at audit. No existing implementation was replaced.
 No TikTok horizon forecasts are trained: snapshots at different post ages are
-not comparable outcome labels. Independent monitoring, full OAuth lifecycle,
+not comparable outcome labels. Deployed platform monitoring, full OAuth lifecycle,
 classification, trees, neural networks, clustering, drift, deployment, and
 production release acceptance remain future milestones.
+
+See [operations and current authorization boundaries](docs/OPERATIONS.md) for Studio imports, durable jobs and standalone connection health. A signed-in Cloud Browser does not transfer a platform credential into S_ML.

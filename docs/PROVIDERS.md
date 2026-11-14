@@ -59,5 +59,7 @@ include views, likes, comments and shares; watch-time/completion are not fields
 in that endpoint. Do not claim that obtaining Login Kit or Display API access
 grants all TikTok Studio analytics. TikTok developer registration, reviewed app
 configuration and supported authorization are separate from the Metricool grant.
-Full OAuth connect/refresh/revoke/account switching and health endpoints remain
-unimplemented, not silently simulated.
+Version 0.2 adds a fixed-origin read-only standalone Metricool health check using
+an environment-secret reference. It has transport tests but no configured live API
+credential. Full OAuth connect/refresh/revoke/account switching and direct analytics
+fetch remain unimplemented. See OPERATIONS.md.
