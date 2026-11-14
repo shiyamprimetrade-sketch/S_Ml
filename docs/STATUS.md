@@ -5,7 +5,7 @@ Current milestone: foundation + initial Stanford regression core + authorized
 Metricool export ingestion. Full mission is not complete.
 
 - Active branch: `feature/verified-ml-foundation`.
-- Previous commit: `cbf2b92b7c4aaec5124bdf77b949ab773189c592` (empty-repo audit baseline).
+- Previous commit: `8d7d991f2a9a129e992433cd23536a143cc13fd5` (verified implementation).
 - Latest implementation commit: resolve branch HEAD / associated PR; this file
   records its parent to avoid self-referential commit hashes.
 - Last completed task: executable training, validation selection, save/reload,
@@ -41,3 +41,5 @@ PCA/clustering, learned recommendations, experiment outcomes, public dashboard
 authentication, full privacy/secret review, and production release acceptance.
 
 Verification: wheel builds successfully; package inspection includes dashboard HTML and excludes private/runtime paths. Python compile checks pass. Browser rendering remains unverified because Chromium could not launch in this runtime.
+
+GitHub verification: implementation commit 8d7d991f2a9a129e992433cd23536a143cc13fd5 passed all four jobs in run 43587860448: Python 3.11, 3.12, 3.13 tests/build and pinned dependency audit. PR: https://github.com/shiyamprimetrade-sketch/S_Ml/pull/1 . Evidence run: https://github.com/shiyamprimetrade-sketch/S_Ml/actions/runs/43587860448 . Installed-wheel smoke test from outside the source tree trained a linear model and loaded the packaged dashboard asset.

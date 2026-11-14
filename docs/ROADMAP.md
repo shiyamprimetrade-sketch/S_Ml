@@ -2,7 +2,7 @@
 
 | Phase | State | Next acceptance evidence |
 |---|---|---|
-| 1 Foundation | Implemented, CI verification in progress | Clean installation and verified PR |
+| 1 Foundation | Implemented; all four CI jobs passed | Clean installation and verified PR |
 | 2 Stanford ML core | Partial | Regression implemented; classification/SVM, clustering/PCA and further algorithms pending |
 | 3 TikTok integration | Partial | Authorized connector export ingestion verified; standalone auth and sync pending |
 | 4 Dashboard | Partial | Read-only HTTP API verified; browser rendering and action controls pending |
