@@ -1,0 +1,17 @@
+__pycache__/
+*.egg-info/
+.venv/
+build/
+dist/
+.env
+.env.*
+!.env.example
+runtime/
+private/
+*.sqlite*
+*.db
+*.pem
+*.key
+*.npz
+*.pkl
+*.joblib

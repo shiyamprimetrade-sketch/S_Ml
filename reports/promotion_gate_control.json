@@ -1,0 +1,97 @@
+{
+  "scope": "Synthetic control-flow demonstration; no platform performance claim",
+  "decisions": [
+    {
+      "mission": "synthetic-control",
+      "candidate": "initial",
+      "previous_version": null,
+      "policy": {
+        "min_examples": 30,
+        "min_relative_improvement": 0.05,
+        "max_rmse_ratio": 1.0,
+        "min_absolute_improvement": 1e-08
+      },
+      "examples": 40,
+      "accepted": true,
+      "holdout_sha256": "a29cd9a53f1527df913610b6e812697efefb7ea11e999949f6533c2b6735f43c",
+      "limitation": "Held-out improvements do not guarantee future performance",
+      "candidate_scores": {
+        "mae": 0.3342603399346964,
+        "rmse": 0.37189192450975866
+      },
+      "reference_scores": {
+        "baseline": {
+          "mae": 1.1142011331156532,
+          "rmse": 1.239639748365859
+        }
+      },
+      "reason": "all_promotion_checks_passed"
+    },
+    {
+      "mission": "synthetic-control",
+      "candidate": "better",
+      "previous_version": "initial",
+      "policy": {
+        "min_examples": 30,
+        "min_relative_improvement": 0.05,
+        "max_rmse_ratio": 1.0,
+        "min_absolute_improvement": 1e-08
+      },
+      "examples": 40,
+      "accepted": true,
+      "holdout_sha256": "a073c34b6881db216e0bb28c3ace1ec028840465cce566a4ec021f1b18f1f27f",
+      "limitation": "Held-out improvements do not guarantee future performance",
+      "candidate_scores": {
+        "mae": 0.05824159007785825,
+        "rmse": 0.06556884901747853
+      },
+      "reference_scores": {
+        "baseline": {
+          "mae": 1.164831801557114,
+          "rmse": 1.3113769803495128
+        },
+        "incumbent": {
+          "mae": 0.3494495404671357,
+          "rmse": 0.39341309410485553
+        }
+      },
+      "reason": "all_promotion_checks_passed"
+    },
+    {
+      "mission": "synthetic-control",
+      "candidate": "worse",
+      "previous_version": "better",
+      "policy": {
+        "min_examples": 30,
+        "min_relative_improvement": 0.05,
+        "max_rmse_ratio": 1.0,
+        "min_absolute_improvement": 1e-08
+      },
+      "examples": 40,
+      "accepted": false,
+      "holdout_sha256": "88ee8ac00bc981488064d9376fd2859beb212d3e2db5276144413cadf25ddb67",
+      "limitation": "Held-out improvements do not guarantee future performance",
+      "candidate_scores": {
+        "mae": 0.4155396312006879,
+        "rmse": 0.4848511455939835
+      },
+      "reference_scores": {
+        "baseline": {
+          "mae": 1.0388490780017174,
+          "rmse": 1.2121278639849566
+        },
+        "incumbent": {
+          "mae": 0.05194245390008754,
+          "rmse": 0.0606063931992497
+        }
+      },
+      "reason": "no_required_mae_improvement_over_incumbent"
+    }
+  ],
+  "active_after_rejected_candidate": "better",
+  "rollback": {
+    "mission": "synthetic-control",
+    "previous_version": "better",
+    "restored_version": "initial"
+  }
+}

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "s-ml"
+version = "0.3.0"
+description = "Reproducible machine learning and authorized observation engine"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24,<3", "scikit-learn>=1.4,<2"]
+
+[project.scripts]
+s-ml = "s_ml.cli:main"
+
+[tool.setuptools.package-data]
+s_ml = ["dashboard.html"]
+
+[tool.setuptools]
+packages = ["s_ml"]

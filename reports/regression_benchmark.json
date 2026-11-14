@@ -1,0 +1,123 @@
+{
+  "schema": "s_ml.benchmark.v1",
+  "dataset": "sklearn.load_diabetes (public real data)",
+  "dataset_sha256": "84ec38030d0ff6dfdc32f475c5633e39e7ada9dbc328d3deb29bb757eec6a331",
+  "scope": "General regression engineering benchmark; not TikTok, not a time-series claim",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "sklearn": "1.8.0"
+  },
+  "split": {
+    "method": "fixed index order 60/20/20",
+    "train": 265,
+    "validation": 88,
+    "test": 89
+  },
+  "trials": [
+    {
+      "model": "linear_gd_lambda_0",
+      "validation": {
+        "mae": 43.987856835757846,
+        "rmse": 56.1327740092336
+      }
+    },
+    {
+      "model": "linear_gd_lambda_1",
+      "validation": {
+        "mae": 43.92544127728335,
+        "rmse": 56.060427883199594
+      }
+    },
+    {
+      "model": "linear_gd_lambda_10",
+      "validation": {
+        "mae": 43.6598600925724,
+        "rmse": 55.652891429158515
+      }
+    },
+    {
+      "model": "linear_gd_lambda_100",
+      "validation": {
+        "mae": 43.71167366467242,
+        "rmse": 54.37360684725155
+      }
+    }
+  ],
+  "baseline_validation": {
+    "mae": 63.60836192109776,
+    "rmse": 73.16636904994942
+  },
+  "selected": "linear_gd_lambda_10",
+  "promotion_rule": "validation MAE at least 5% lower than mean baseline",
+  "candidate_promoted_in_benchmark_only": true,
+  "test": {
+    "mae": 43.30413797901855,
+    "rmse": 55.401759407362924
+  },
+  "baseline_test": {
+    "mae": 70.17867288530846,
+    "rmse": 80.29783941544095
+  },
+  "initial_train_loss": 14174.084905660377,
+  "final_train_loss": 1446.4559673138615,
+  "checkpoint_reload_max_abs_delta": 0.0,
+  "sklearn_ridge_max_prediction_delta": 0.004118733723998957,
+  "interval": {
+    "method": "validation absolute-residual 90th percentile heuristic",
+    "radius": 98.02569352705149,
+    "test_coverage": 0.9101123595505618,
+    "limitation": "No guaranteed coverage under drift or adaptive model selection"
+  },
+  "learning_curve": [
+    {
+      "n": 40,
+      "train": {
+        "mae": 37.36863766024974,
+        "rmse": 45.43259670133234
+      },
+      "validation": {
+        "mae": 44.628314926819456,
+        "rmse": 56.237509025005764
+      }
+    },
+    {
+      "n": 80,
+      "train": {
+        "mae": 39.97299462286672,
+        "rmse": 49.67955341533994
+      },
+      "validation": {
+        "mae": 42.02193329842493,
+        "rmse": 53.74015919411161
+      }
+    },
+    {
+      "n": 160,
+      "train": {
+        "mae": 42.84809838385417,
+        "rmse": 52.729796371980584
+      },
+      "validation": {
+        "mae": 42.48468266611949,
+        "rmse": 54.641728484132734
+      }
+    },
+    {
+      "n": 265,
+      "train": {
+        "mae": 43.88987009216433,
+        "rmse": 53.16630810719925
+      },
+      "validation": {
+        "mae": 43.6598600925724,
+        "rmse": 55.652891429158515
+      }
+    }
+  ],
+  "limitations": [
+    "No production model promoted",
+    "Single fixed holdout; no clinical use",
+    "TikTok needs repeated, horizon-aligned observations before forecasting"
+  ]
+}
