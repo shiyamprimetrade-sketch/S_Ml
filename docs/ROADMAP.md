@@ -26,3 +26,10 @@ Version 0.2 milestone: local import scheduling, crash/restart recovery, separate
 Studio evidence and read-only API health are implemented. The next milestone is
 the independently authorized analytics fetch adapter and horizon-label readiness
 checks. A browser session is kept separate and is never exported as a token.
+
+
+Version 0.3: held-out candidate promotion, immutable model registry, evaluation
+reuse protection and approved-version rollback are implemented for regression.
+Prepared dataset training can invoke this gate; it is not yet wired to platform
+label construction. Direct analytics fetching and horizon-label readiness remain
+next. Production forecasting must always resolve the approved active pointer.

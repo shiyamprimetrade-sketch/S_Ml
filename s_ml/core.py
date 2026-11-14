@@ -97,7 +97,11 @@ class LinearGD:
 
     @classmethod
     def load(cls, path):
-        data = json.loads(Path(path).read_text(encoding="utf-8"))
+        return cls.from_dict(json.loads(Path(path).read_text(encoding="utf-8")))
+
+    @classmethod
+    def from_dict(cls, data):
+        """Restore numeric checkpoint data without executing serialized code."""
         if data.get("format") != "s_ml.linear.v1":
             raise ValueError("Unsupported checkpoint format")
         model = cls(**data["parameters"])

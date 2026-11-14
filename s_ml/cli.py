@@ -13,6 +13,13 @@ def main(argv=None):
     sub = p.add_subparsers(dest='command', required=True)
     sub.add_parser('import-metricool').add_argument('file', type=Path)
     sub.add_parser('status')
+    gate = sub.add_parser('train-and-gate')
+    gate.add_argument('manifest', type=Path)
+    gate.add_argument('--output', default='runtime/candidates')
+    sub.add_parser('model-status')
+    restore = sub.add_parser('model-rollback')
+    restore.add_argument('mission')
+    restore.add_argument('version')
     sub.add_parser('import-studio').add_argument('file', type=Path)
     job = sub.add_parser('worker-add')
     job.add_argument('--account-id', type=int, required=True)
@@ -90,6 +97,15 @@ def main(argv=None):
             elif args.command == 'connection-disconnect':
                 from .providers import disconnect
                 result = disconnect(store, args.account_id)
+            elif args.command == 'train-and-gate':
+                from .promotion import train_and_gate
+                result = train_and_gate(store, json.loads(args.manifest.read_text(encoding='utf-8')), args.output)
+            elif args.command == 'model-status':
+                from .promotion import registry_status
+                result = registry_status(store)
+            elif args.command == 'model-rollback':
+                from .promotion import rollback
+                result = rollback(store, args.mission, args.version)
             elif args.command == 'status':
                 result = store.summary()
             elif args.command == 'recommend':
@@ -103,7 +119,7 @@ def main(argv=None):
                 result = {'backup': str(args.file)}
             elif args.command == 'delete-account':
                 store.delete_account(args.id)
-                result = {'deleted_account': args.id, 'limitation': 'Independent backups and exports require separate deletion'}
+                result = {'deleted_account': args.id, 'limitation': 'Independent backups, exports and candidate files require separate deletion'}
             else:
                 result = {'experiment_id': store.experiment(args.account_id, args.hypothesis, args.variable, args.metric, args.hours)}
     print(json.dumps(result, indent=2))

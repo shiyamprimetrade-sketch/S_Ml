@@ -58,3 +58,19 @@ This validates crash recovery, not unattended platform data collection.
 Read-only connection-health tests cover missing secrets, denied access, wrong
 brand, malformed responses and persisted Retry-After. No separate standalone API
 token was configured or used. No browser credentials were copied into the engine.
+
+
+## E005 - Promotion gate control-flow verification, 2026-11-14
+
+A reproducible synthetic experiment trains three saved regression candidates
+against fresh held-out rows. The initial candidate passes the mean baseline; a
+better candidate passes baseline and incumbent; a worse candidate is rejected
+while the approved incumbent stays active. Explicit rollback restores a formerly
+approved version. Report: reports/promotion_gate_control.json. This measures
+control-flow behavior, not TikTok accuracy or a probability of future improvement.
+
+Additional tests enforce the RMSE guard despite improved MAE, dataset separation,
+non-reused gate observations, temporal origin/label boundaries, immutable model
+versions, persistent selection across restarts, transactional failure recovery,
+account deletion and feature schema compatibility. Real account observations
+were preserved by schema migration; no live account model was trained/promoted.

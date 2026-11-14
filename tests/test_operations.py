@@ -104,7 +104,7 @@ class OperationTests(unittest.TestCase):
             db.execute('PRAGMA user_version=1')
         self.store = Store(self.path)
         self.assertEqual(self.store.summary()['totals']['views']['observed_sum'], 84)
-        self.assertEqual(self.store.connection.execute('PRAGMA user_version').fetchone()[0], 2)
+        self.assertEqual(self.store.connection.execute('PRAGMA user_version').fetchone()[0], 3)
 
     def test_worker_idempotent_across_restarts(self):
         self.publish()

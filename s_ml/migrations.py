@@ -30,3 +30,24 @@ CREATE TABLE IF NOT EXISTS provider_connections (
 PRAGMA user_version=2;
 COMMIT;
 '''
+
+MIGRATION_3 = '''
+BEGIN IMMEDIATE;
+CREATE TABLE IF NOT EXISTS model_versions (
+ mission TEXT NOT NULL,version TEXT NOT NULL,account_id INTEGER REFERENCES accounts(id) ON DELETE CASCADE,
+ checkpoint TEXT NOT NULL,digest TEXT NOT NULL,feature_schema TEXT NOT NULL,training_ids TEXT NOT NULL,
+ training_cutoff TEXT,validation_mode TEXT NOT NULL,baseline_mean REAL NOT NULL,
+ PRIMARY KEY(mission,version));
+CREATE TABLE IF NOT EXISTS model_active (
+ mission TEXT PRIMARY KEY,version TEXT NOT NULL,
+ FOREIGN KEY(mission,version) REFERENCES model_versions(mission,version) ON DELETE CASCADE);
+CREATE TABLE IF NOT EXISTS model_decisions (
+ id INTEGER PRIMARY KEY,mission TEXT NOT NULL,candidate TEXT NOT NULL,previous_version TEXT,
+ kind TEXT NOT NULL,accepted INTEGER NOT NULL,reason TEXT NOT NULL,report TEXT NOT NULL,at TEXT NOT NULL,
+ FOREIGN KEY(mission,candidate) REFERENCES model_versions(mission,version) ON DELETE CASCADE);
+CREATE TABLE IF NOT EXISTS model_holdouts (
+ mission TEXT NOT NULL,example_id TEXT NOT NULL,decision_id INTEGER NOT NULL REFERENCES model_decisions(id) ON DELETE CASCADE,
+ PRIMARY KEY(mission,example_id));
+PRAGMA user_version=3;
+COMMIT;
+'''

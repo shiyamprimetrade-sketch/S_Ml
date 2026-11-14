@@ -44,13 +44,16 @@ class Store:
         self.connection = sqlite3.connect(path)
         self.connection.row_factory = sqlite3.Row
         version = self.connection.execute("PRAGMA user_version").fetchone()[0]
-        if version not in (0, 1, 2):
+        if version not in (0, 1, 2, 3):
             self.connection.close()
             raise ValueError("Unsupported database version; explicit migration required")
         self.connection.executescript(SCHEMA)
         if version < 2:
             from .migrations import MIGRATION_2
             self.connection.executescript(MIGRATION_2)
+        if version < 3:
+            from .migrations import MIGRATION_3
+            self.connection.executescript(MIGRATION_3)
 
     def close(self):
         self.connection.close()
@@ -122,7 +125,8 @@ class Store:
             "SELECT id,account_id,interval_seconds,next_run,paused,lease_until,failures,last_run,last_status FROM worker_jobs ORDER BY id")]
         connections = [dict(row) for row in db.execute(
             "SELECT account_id,enabled,last_check,last_status,next_check FROM provider_connections ORDER BY account_id")]
-        return {"provider_connections": connections, "studio_evidence": studio_evidence(self), "worker_jobs": jobs,
+        from .promotion import registry_status
+        return {"models": registry_status(self), "provider_connections": connections, "studio_evidence": studio_evidence(self), "worker_jobs": jobs,
                 "accounts": accounts, "posts": posts, "totals": totals,
                 "latest_observation": last,
                 "freshness_seconds": max(0, (now - aware_time(last)).total_seconds()) if last else None,
@@ -132,7 +136,11 @@ class Store:
                     "manual authorized imports; no worker jobs configured"}
 
     def export(self):
-        return {"schema": "s_ml.store-export.v1", "studio_observations": [json.loads(r[0]) for r in self.connection.execute("SELECT payload FROM studio_batches ORDER BY collected_at")], "batches": [json.loads(r[0]) for r in
+        return {"schema": "s_ml.store-export.v1",
+                "model_versions": [dict(r) for r in self.connection.execute("SELECT * FROM model_versions")],
+                "model_decisions": [dict(r) for r in self.connection.execute("SELECT * FROM model_decisions")],
+                "model_active": [dict(r) for r in self.connection.execute("SELECT * FROM model_active")],
+                "model_holdouts": [dict(r) for r in self.connection.execute("SELECT * FROM model_holdouts")], "studio_observations": [json.loads(r[0]) for r in self.connection.execute("SELECT payload FROM studio_batches ORDER BY collected_at")], "batches": [json.loads(r[0]) for r in
                 self.connection.execute("SELECT payload FROM batches ORDER BY observed_at")]}
 
     def delete_account(self, account_id):

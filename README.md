@@ -1,7 +1,7 @@
 # S_ML
 
 S_ML is a local-first machine-learning and observation engine. Its first mission
-is authorized TikTok analytics. Version 0.2.0 is an **engineering foundation**,
+is authorized TikTok analytics. Version 0.3.0 is an **engineering foundation**,
 not a completed autonomous TikTok forecasting service.
 
 ## Working now
@@ -15,6 +15,7 @@ not a completed autonomous TikTok forecasting service.
   platform-ID reconciliation, immutable SQLite metric snapshots and audit records.
 - Missing values, units and timestamps remain explicit; backfills do not overwrite
   newer metadata. Exports, backups, account deletion and experiment registration.
+- Persistent model promotion gate: held-out comparison against incumbent and baseline, fresh-sample checks, atomic activation and approved-version rollback.
 - Read-only local dashboard and CLI. Diagnostics are labelled fixed rules.
 - Separate Studio retention evidence, preserving source update days and unknown metric windows.
 - Restart-safe local export-inbox worker with leases, idempotent receipts, pause/resume and retry backoff.
@@ -78,3 +79,5 @@ classification, trees, neural networks, clustering, drift, deployment, and
 production release acceptance remain future milestones.
 
 See [operations and current authorization boundaries](docs/OPERATIONS.md) for Studio imports, durable jobs and standalone connection health. A signed-in Cloud Browser does not transfer a platform credential into S_ML.
+
+See [model promotion policy and prepared training](docs/MODEL_PROMOTION.md). Training a candidate never automatically makes it active; `train-and-gate` must pass the recorded checks.

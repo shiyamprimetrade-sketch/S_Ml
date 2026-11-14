@@ -27,7 +27,7 @@ S_ML must not grant shell/UI execution just because another subsystem requests i
 
 Production migrations must preserve raw snapshots and user identity, add schema
 migrations rather than replacing the database, and separate service secrets from
-account data. The current database is schema v2, migrated additively from v1; deployment is not yet supported.
+account data. The current database is schema v3, migrated additively from v1/v2; deployment is not yet supported.
 
 Version 0.2 adds `studio.py` for separately sourced owner-visible observations;
 `worker.py` for a durable local inbox queue; and `providers.py` for connection
@@ -35,3 +35,12 @@ metadata plus fixed-origin read-only API health. `migrations.py` adds schema v2
 without replacing v1 snapshots. Studio rows reconcile by existing account/post
 IDs; they do not double-count account totals. Worker receipts and leases are
 persisted, and expired lease owners cannot clear a successor's claim.
+
+
+Version 0.3 adds `promotion.py`: numeric checkpoint snapshots, a per-mission
+active-model pointer, held-out decision ledger, consumed evaluation IDs and
+explicit rollback. Temporal guards use both forecast origin and outcome
+availability. Promotion decisions and pointer changes are one SQLite transaction.
+A trained candidate remains inactive unless the gate passes; prediction adapters
+must resolve the active pointer. Account-linked registry records cascade on
+account deletion. The public benchmark does not alter this registry.
